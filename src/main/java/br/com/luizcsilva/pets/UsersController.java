@@ -24,7 +24,7 @@ public class UsersController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity getUsers(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getName().equals("darkluxury")){
+        if (authentication.getName().equals("admin")){
             return ResponseEntity.ok().body(repository.findAll());
         }
         return ResponseEntity.status(401).body(null);
@@ -38,7 +38,7 @@ public class UsersController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity setNewUser(@RequestBody Users newUser){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getName().equals("darkluxury") && newUser.getUsername() != null && newUser.getPassword() != null){
+        if (authentication.getName().equals("admin") && newUser.getUsername() != null && newUser.getPassword() != null){
             if (repository.findByUsername(newUser.getUsername()) == null ){
                 repository.save(newUser);
                 System.out.println(newUser);
